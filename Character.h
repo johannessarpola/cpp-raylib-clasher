@@ -7,6 +7,7 @@ public:
     Vector2 get_world_pos() { return world_pos; }
     void init_screen_pos(int window_width, int window_height);
     void tick(float delta);
+    void undo_movement();
     void unload();
 private:
     Texture2D texture{LoadTexture("assets/characters/knight_idle_spritesheet.png")};
@@ -14,7 +15,8 @@ private:
     Texture2D run{LoadTexture("assets/characters/knight_run_spritesheet.png")};
     Vector2 screen_pos{};
     Vector2 world_pos{};
-    
+    Vector2 world_pos_previous{};
+
     float frame{};
     float running_time{};
     float update_time{1.f / 12.f};

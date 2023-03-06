@@ -25,7 +25,8 @@ void Character::init_screen_pos(int window_width, int window_height)
 }
 
 void Character::tick(float delta)
-{
+{   
+    world_pos_previous = world_pos;
     Vector2 direction{};
     if (IsKeyDown(KEY_A))
         direction.x -= 1;
@@ -71,4 +72,8 @@ void Character::tick(float delta)
         scale * height};
 
     DrawTexturePro(texture, src, dst, Vector2{}, 0.f, WHITE);
+}
+
+void Character::undo_movement() {
+    world_pos = world_pos_previous;
 }

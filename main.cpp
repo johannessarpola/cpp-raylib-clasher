@@ -20,16 +20,25 @@ int main()
     Character knight(fps, 6, 4.f, 4.f);
     knight.init_screen_pos(window_width, window_height);
 
+    float map_scale = 4.;
     float delta{};
     while (!WindowShouldClose())
     {
         BeginDrawing();
         ClearBackground(WHITE);
         delta = GetFrameTime();
-        DrawTextureEx(map, map_pos, 0.0, 4.0, WHITE);
 
-        knight.tick(delta);
         map_pos = Vector2Scale(knight.get_world_pos(), -1.f);
+        DrawTextureEx(map, map_pos, 0.0, map_scale, WHITE);
+        knight.tick(delta);
+        // check maps bounds
+        if(knight.get_world_pos().x < 0.f || 
+           knight.get_world_pos().y < 0.f ||
+           knight.get_world_pos().x + window_width  > map.width * map_scale||
+           knight.get_world_pos().y + window_height > map.height * map_scale
+        ) {
+            knight.undo_movement();
+        }
         EndDrawing();
     }
 

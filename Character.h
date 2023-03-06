@@ -3,9 +3,9 @@
 class Character
 {
 public:
-    Character(int fps, int frames, float scale, float speed);
+    Character(int window_width, int window_height);
+    Character(int fps, int frames, float scale, float speed, int window_width, int window_height);
     Vector2 get_world_pos() { return world_pos; }
-    void init_screen_pos(int window_width, int window_height);
     void tick(float delta);
     void undo_movement();
     void unload();
@@ -21,11 +21,13 @@ private:
     float running_time{};
     float update_time{1.f / 12.f};
     
-    int total_frames{};
+    int total_frames{6};
     float scale{4.f};
     float speed{4.f};
     float right_left{1.f};
 
     float width{};
     float height{};
+    void set_screen_pos(int window_width, int window_height);
+    void set_dims();
 };

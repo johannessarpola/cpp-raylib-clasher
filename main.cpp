@@ -17,8 +17,7 @@ int main()
 
     Texture2D map = LoadTexture("assets/nature_tileset/OpenWorldMap24x24.png");
     Vector2 map_pos{0.f, 0.f};    
-    Character knight(fps, 6, 4.f, 4.f);
-    knight.init_screen_pos(window_width, window_height);
+    Character knight(fps, 6, 4.f, 4.f, window_width, window_height);
 
     float map_scale = 4.;
     float delta{};

@@ -8,20 +8,30 @@ void Character::unload() {
     UnloadTexture(run);
 }
 
-Character::Character(int fps, int frames, float scale, float speed) {
+Character::Character(int window_width, int window_height) {
+    set_dims();
+    set_screen_pos(window_width, window_height);
+}
+
+Character::Character(int fps, int frames, float scale, float speed, int window_width, int window_height) {
     this->total_frames = frames;
     this->scale = scale;
     this->speed = speed;
-    this->update_time = 1.f / (fps / frames);
-    this->height = (float) texture.height;
-    this->width = (float) texture.width / (float) frames;
+    this->update_time = 1.f / (static_cast<float>(fps) / static_cast<float>(frames));
+    set_dims();
+    set_screen_pos(window_width, window_height);
+
 }
 
-void Character::init_screen_pos(int window_width, int window_height)
-{
-    screen_pos = {
-        (float) window_width / 2.0f - scale * (0.5f * width / total_frames),
-        (float) window_height / 2.0f - scale * (0.5f * height)};
+void Character::set_screen_pos(int window_width, int window_height) {
+    this->screen_pos = {
+        static_cast<float>(window_width) / 2.0f - scale * (0.5f * width / total_frames),
+        static_cast<float>(window_height) / 2.0f - scale * (0.5f * height)};
+}
+
+void Character::set_dims() {
+    this->height = static_cast<float>(texture.height);
+    this->width = static_cast<float>(texture.width) / static_cast<float>(total_frames);
 }
 
 void Character::tick(float delta)
@@ -60,9 +70,9 @@ void Character::tick(float delta)
     }
 
     Rectangle src{
-        (float) frame * width,
+        static_cast<float>(frame) * width,
         0.f,
-        (float) right_left * width,
+        static_cast<float>(right_left) * width,
         height};
 
     Rectangle dst{

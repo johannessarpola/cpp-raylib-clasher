@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
 
 int main()
 {
@@ -19,6 +20,7 @@ int main()
     Vector2 map_pos{0.f, 0.f};    
     Character knight(fps, 6, 4.f, 4.f, window_width, window_height);
 
+    Prop rock{Vector2{0.f, 0.f}, LoadTexture("assets/nature_tileset/Rock.png")};
     float map_scale = 4.;
     float delta{};
     while (!WindowShouldClose())
@@ -29,6 +31,7 @@ int main()
 
         map_pos = Vector2Scale(knight.get_world_pos(), -1.f);
         DrawTextureEx(map, map_pos, 0.0, map_scale, WHITE);
+        rock.render(knight.get_world_pos());
         knight.tick(delta);
         // check maps bounds
         if(knight.get_world_pos().x < 0.f || 

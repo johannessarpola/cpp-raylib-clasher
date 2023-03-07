@@ -9,6 +9,7 @@ public:
     void tick(float delta);
     void undo_movement();
     void unload();
+    Rectangle get_collision_rec();
 private:
     Texture2D texture{LoadTexture("assets/characters/knight_idle_spritesheet.png")};
     Texture2D idle{LoadTexture("assets/characters/knight_idle_spritesheet.png")};

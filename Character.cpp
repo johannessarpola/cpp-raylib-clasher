@@ -87,3 +87,13 @@ void Character::tick(float delta)
 void Character::undo_movement() {
     world_pos = world_pos_previous;
 }
+
+Rectangle Character::get_collision_rec() 
+{
+    return Rectangle{
+        screen_pos.x,
+        screen_pos.y,
+        width * scale,
+        height * scale
+    };
+}

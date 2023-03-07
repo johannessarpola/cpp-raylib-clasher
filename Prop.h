@@ -9,6 +9,7 @@ public:
     void unload() {
         UnloadTexture(texture);
     }
+    Rectangle get_collision_rec(Vector2 player_pos);
 private:
     Texture2D texture{};
     Vector2 world_pos{};

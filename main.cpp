@@ -5,6 +5,7 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -24,6 +25,11 @@ int main()
     {
         Prop{Vector2{600.f, 300.f}, LoadTexture("assets/nature_tileset/Rock.png")},
         Prop{Vector2{400.f, 500.f}, LoadTexture("assets/nature_tileset/Log.png")}
+    };
+    Enemy goblin{
+        Vector2{100.f, 100.f},
+        LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
+        LoadTexture("assets/characters/goblin_run_spritesheet.png")
     };
 
     float map_scale = 4.;
@@ -59,13 +65,14 @@ int main()
                 knight.undo_movement();
             }
         }
-
+        goblin.tick(delta);
 
         EndDrawing();
     }
 
     UnloadTexture(map);
     knight.unload();
+    goblin.unload();
     for (auto prop : props)
     {
         prop.unload();

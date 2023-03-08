@@ -11,6 +11,7 @@ public:
     void undo_movement();
     void unload();
     Rectangle get_collision_rec();
+    virtual void tick(float delta);
 protected:
     Texture2D texture{};
     Texture2D idle{};

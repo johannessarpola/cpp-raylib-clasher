@@ -40,7 +40,7 @@ void Character::set_screen_pos(int window_width, int window_height) {
 
 void Character::tick(float delta)
 {   
-    world_pos_previous = world_pos;
+    BaseCharacter::tick(delta);
     Vector2 direction{};
     if (IsKeyDown(KEY_A))
         direction.x -= 1;
@@ -62,28 +62,4 @@ void Character::tick(float delta)
         texture = idle;
     }
 
-    running_time += delta;
-    if (running_time > update_time)
-    {
-        frame++;
-        running_time = 0.f;
-        if (frame > total_frames)
-        {
-            frame = 0;
-        }
-    }
-
-    Rectangle src{
-        static_cast<float>(frame) * width,
-        0.f,
-        static_cast<float>(right_left) * width,
-        height};
-
-    Rectangle dst{
-        screen_pos.x,
-        screen_pos.y,
-        scale * width,
-        scale * height};
-
-    DrawTexturePro(texture, src, dst, Vector2{}, 0.f, WHITE);
 }

@@ -14,6 +14,6 @@ public:
           int frames, 
           float scale, 
           float speed);
-    void tick(float delta);
+    virtual void tick(float delta) override;
     void set_screen_pos(int window_width, int window_height);
 };

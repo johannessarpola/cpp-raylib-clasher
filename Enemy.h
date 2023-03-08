@@ -14,5 +14,5 @@ public:
           int frames, 
           float scale, 
           float speed);
-    void tick(float delta);
+    virtual void tick(float delta) override;
 };

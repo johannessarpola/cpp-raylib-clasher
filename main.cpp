@@ -23,23 +23,20 @@ int main()
         Vector2{0.f, 0.f},
         LoadTexture("assets/characters/knight_idle_spritesheet.png"),
         LoadTexture("assets/characters/knight_run_spritesheet.png"),
-        fps, 
-        6, 
-        4.f, 
-        4.f);
+        fps,
+        6,
+        4.f,
+        4.f,
+        window_width,
+        window_height);
 
-    knight.set_screen_pos(window_width, window_height);
-
-    Prop props[2]
-    {
+    Prop props[2]{
         Prop{Vector2{600.f, 300.f}, LoadTexture("assets/nature_tileset/Rock.png")},
-        Prop{Vector2{400.f, 500.f}, LoadTexture("assets/nature_tileset/Log.png")}
-    };
+        Prop{Vector2{400.f, 500.f}, LoadTexture("assets/nature_tileset/Log.png")}};
     Enemy goblin{
         Vector2{100.f, 100.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
-        LoadTexture("assets/characters/goblin_run_spritesheet.png")
-    };
+        LoadTexture("assets/characters/goblin_run_spritesheet.png")};
 
     float map_scale = 4.;
     float delta{};
@@ -70,7 +67,8 @@ int main()
         {
             Rectangle prop_rec = prop.get_collision_rec(knight.get_world_pos());
             Rectangle plr_rec = knight.get_collision_rec();
-            if(CheckCollisionRecs(prop_rec, plr_rec)) {
+            if (CheckCollisionRecs(prop_rec, plr_rec))
+            {
                 knight.undo_movement();
             }
         }

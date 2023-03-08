@@ -2,26 +2,31 @@
 
 Enemy::Enemy(Vector2 pos,
              Texture2D idle,
-             Texture run) :
-    texture(idle),
-    idle(idle),
-    run(run),
-    world_pos(pos)
+             Texture run)
 {
+    texture = idle;
+    idle = idle;
+    run = run;
+    world_pos = pos;
     set_dims();
 }
+
 Enemy::Enemy(Vector2 pos,
              Texture2D idle,
              Texture run,
              int fps,
              int frames,
              float scale,
-             float speed) :
-    texture(idle),
-    idle(idle),
-    run(run),
-    world_pos(pos)
+             float speed)
 {
+    this->texture = idle;
+    this->idle = idle;
+    this->run = run;
+    world_pos = pos;
+    this->total_frames = frames;
+    this->scale = scale;
+    this->speed = speed;
+    this->update_time = 1.f / (static_cast<float>(fps) / static_cast<float>(frames));
     set_dims();
 }
 
@@ -54,27 +59,4 @@ void Enemy::tick(float delta)
     DrawTexturePro(texture, src, dst, Vector2{}, 0.f, WHITE);
 }
 
-Rectangle Enemy::get_collision_rec() 
-{    
-    return Rectangle{
-        screen_pos.x,
-        screen_pos.y,
-        width * scale,
-        height * scale
-    };
-}
 
-void Enemy::undo_movement() {
-    world_pos = world_pos_previous;
-}
-
-void Enemy::set_dims() {
-    this->height = static_cast<float>(texture.height);
-    this->width = static_cast<float>(texture.width) / static_cast<float>(total_frames);
-}
-
-void Enemy::unload() {
-    UnloadTexture(texture);
-    UnloadTexture(idle);
-    UnloadTexture(run);
-}

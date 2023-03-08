@@ -2,36 +2,40 @@
 #include "raylib.h"
 #include "raymath.h"
 
-void Character::unload() {
-    UnloadTexture(texture);
-    UnloadTexture(idle);
-    UnloadTexture(run);
-}
-
-Character::Character(int window_width, int window_height) {
+Character::Character(Vector2 pos,
+             Texture2D idle,
+             Texture run)
+{
+    texture = idle;
+    idle = idle;
+    run = run;
+    world_pos = pos;
     set_dims();
-    set_screen_pos(window_width, window_height);
 }
 
-Character::Character(int fps, int frames, float scale, float speed, int window_width, int window_height) {
+Character::Character(Vector2 pos,
+             Texture2D idle,
+             Texture run,
+             int fps,
+             int frames,
+             float scale,
+             float speed)
+{
+    this->texture = idle;
+    this->idle = idle;
+    this->run = run;
+    world_pos = pos;
     this->total_frames = frames;
     this->scale = scale;
     this->speed = speed;
     this->update_time = 1.f / (static_cast<float>(fps) / static_cast<float>(frames));
     set_dims();
-    set_screen_pos(window_width, window_height);
-
 }
 
 void Character::set_screen_pos(int window_width, int window_height) {
     this->screen_pos = {
         static_cast<float>(window_width) / 2.0f - scale * (0.5f * width / total_frames),
         static_cast<float>(window_height) / 2.0f - scale * (0.5f * height)};
-}
-
-void Character::set_dims() {
-    this->height = static_cast<float>(texture.height);
-    this->width = static_cast<float>(texture.width) / static_cast<float>(total_frames);
 }
 
 void Character::tick(float delta)
@@ -82,18 +86,4 @@ void Character::tick(float delta)
         scale * height};
 
     DrawTexturePro(texture, src, dst, Vector2{}, 0.f, WHITE);
-}
-
-void Character::undo_movement() {
-    world_pos = world_pos_previous;
-}
-
-Rectangle Character::get_collision_rec() 
-{
-    return Rectangle{
-        screen_pos.x,
-        screen_pos.y,
-        width * scale,
-        height * scale
-    };
 }

@@ -19,7 +19,16 @@ int main()
 
     Texture2D map = LoadTexture("assets/nature_tileset/OpenWorldMap24x24.png");
     Vector2 map_pos{0.f, 0.f};
-    Character knight(fps, 6, 4.f, 4.f, window_width, window_height);
+    Character knight(
+        Vector2{0.f, 0.f},
+        LoadTexture("assets/characters/knight_idle_spritesheet.png"),
+        LoadTexture("assets/characters/knight_run_spritesheet.png"),
+        fps, 
+        6, 
+        4.f, 
+        4.f);
+
+    knight.set_screen_pos(window_width, window_height);
 
     Prop props[2]
     {

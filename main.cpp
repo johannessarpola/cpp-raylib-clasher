@@ -37,6 +37,7 @@ int main()
         Vector2{100.f, 100.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
         LoadTexture("assets/characters/goblin_run_spritesheet.png")};
+    goblin.set_Target(&knight);
 
     float map_scale = 4.;
     float delta{};

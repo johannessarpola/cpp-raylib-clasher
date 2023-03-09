@@ -1,6 +1,9 @@
 #include "raylib.h"
 #include "BaseCharacter.h"
 
+#ifndef CHARACTER_H // lol @ cpp
+#define CHARACTER_H // lol @ cpp
+
 class Character : public BaseCharacter
 {
 public:
@@ -23,3 +26,5 @@ public:
 private:
       void set_screen_pos(int window_width, int window_height);
 };
+
+#endif

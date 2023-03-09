@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "raymath.h"
 
 Enemy::Enemy(Vector2 pos,
              Texture2D idle,
@@ -30,9 +31,8 @@ Enemy::Enemy(Vector2 pos,
     set_dims();
 }
 
-void Enemy::tick(float delta) 
+void Enemy::tick(float delta)
 {
+    screen_pos = Vector2Subtract(world_pos, target->get_world_pos());
     BaseCharacter::tick(delta);
 }
-
-

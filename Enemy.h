@@ -16,7 +16,7 @@ public:
             float scale,
             float speed);
       virtual void tick(float delta) override;
-      void set_Target(Character *target) { target = target; }
+      void set_Target(Character *target) { this->target = target; }
 
 private:
       Character *target{};

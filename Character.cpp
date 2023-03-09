@@ -68,4 +68,6 @@ void Character::tick(float delta)
     {
         texture = idle;
     }
+
+
 }

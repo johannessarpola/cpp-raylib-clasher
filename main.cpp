@@ -34,7 +34,7 @@ int main()
         Prop{Vector2{600.f, 300.f}, LoadTexture("assets/nature_tileset/Rock.png")},
         Prop{Vector2{400.f, 500.f}, LoadTexture("assets/nature_tileset/Log.png")}};
     Enemy goblin{
-        Vector2{100.f, 100.f},
+        Vector2{250.f, 250.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
         LoadTexture("assets/characters/goblin_run_spritesheet.png")};
     goblin.set_Target(&knight);

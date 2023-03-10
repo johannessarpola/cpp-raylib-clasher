@@ -17,6 +17,7 @@ public:
             float speed);
       virtual void tick(float delta) override;
       void set_Target(Character *target) { this->target = target; }
+      virtual Vector2 get_screen_pos() override;
 
 private:
       Character *target{};

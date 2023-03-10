@@ -12,13 +12,14 @@ public:
     void unload();
     Rectangle get_collision_rec();
     virtual void tick(float delta);
+    virtual Vector2 get_screen_pos() = 0; // HOX: pure virtual function -> abstract class
 protected:
     Texture2D texture{};
     Texture2D idle{};
     Texture2D run{};
-    Vector2 screen_pos{};
     Vector2 world_pos{};
     Vector2 world_pos_previous{};
+    Vector2 velocity{};
 
     float frame{};
     float running_time{};

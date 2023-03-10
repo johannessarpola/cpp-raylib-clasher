@@ -1,4 +1,5 @@
 #include "BaseCharacter.h"
+#include "raymath.h"
 
 BaseCharacter::BaseCharacter()
 {
@@ -20,6 +21,21 @@ void BaseCharacter::tick(float delta)
         }
     }
 
+    if (Vector2Length(velocity) != 0.0)
+    {
+        world_pos = Vector2Add(world_pos, Vector2Scale(Vector2Normalize(velocity), speed));
+        velocity.x < 0.f ? right_left = -1.f : right_left = 1.f;
+        texture = run;
+    }
+    else
+    {
+        texture = idle;
+    }
+
+    velocity = {};
+    
+    Vector2 screen_pos = get_screen_pos();
+
     Rectangle src{
         static_cast<float>(frame) * width,
         0.f,
@@ -38,6 +54,7 @@ void BaseCharacter::tick(float delta)
 
 Rectangle BaseCharacter::get_collision_rec() 
 {    
+    Vector2 screen_pos = get_screen_pos();
     return Rectangle{
         screen_pos.x,
         screen_pos.y,

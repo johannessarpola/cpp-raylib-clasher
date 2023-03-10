@@ -22,10 +22,12 @@ public:
                 int window_width,
                 int window_height);
       virtual void tick(float delta) override;
-      Vector2 get_screen_pos() { return screen_pos; }
+      virtual Vector2 get_screen_pos() override;
       
 private:
       void set_screen_pos(int window_width, int window_height);
+      int window_width{};
+      int window_height{};
 };
 
 #endif

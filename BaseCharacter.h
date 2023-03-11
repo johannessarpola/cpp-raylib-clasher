@@ -9,7 +9,7 @@ public:
     BaseCharacter();
     Vector2 get_world_pos() { return world_pos; }
     void undo_movement();
-    void unload();
+    virtual void unload();
     Rectangle get_collision_rec();
     virtual void tick(float delta);
     virtual Vector2 get_screen_pos() = 0; // HOX: pure virtual function -> abstract class

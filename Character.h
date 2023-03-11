@@ -23,11 +23,14 @@ public:
                 int window_height);
       virtual void tick(float delta) override;
       virtual Vector2 get_screen_pos() override;
+      virtual void unload() override;
       
 private:
+      Texture2D weapon{LoadTexture("assets/characters/weapon_sword.png")};
       void set_screen_pos(int window_width, int window_height);
       int window_width{};
       int window_height{};
+      Rectangle weapon_collision_rec{};
 };
 
 #endif

@@ -41,5 +41,5 @@ Vector2 Enemy::get_screen_pos()
 void Enemy::tick(float delta)
 {
     velocity = Vector2Subtract(target->get_screen_pos(), this->get_screen_pos());
-    BaseCharacter::tick(delta);
+    //BaseCharacter::tick(delta);
 }

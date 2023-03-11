@@ -45,6 +45,12 @@ Vector2 Character::get_screen_pos()
         static_cast<float>(window_height) / 2.0f - scale * (0.5f * height)};
 }
 
+void Character::unload()
+{
+    BaseCharacter::unload();
+    UnloadTexture(weapon);
+}
+
 void Character::tick(float delta)
 {
     if (IsKeyDown(KEY_A))
@@ -57,4 +63,39 @@ void Character::tick(float delta)
         velocity.y += 1;
 
     BaseCharacter::tick(delta);
+
+    Vector2 origin{};
+    Vector2 offset{};
+    Vector2 screen_pos = get_screen_pos();
+    float rotation = 35.f * right_left; // magic numbers ftw
+    if (right_left > 0.f)
+    {
+        origin = {0.f, weapon.height * scale};
+        offset = {35.f, 55.f}; // magic numbers ftw
+        weapon_collision_rec = {
+            screen_pos.x + offset.x,
+            screen_pos.y + offset.y - weapon.height * scale,
+            weapon.width * scale,
+            weapon.height * scale};
+    }
+    else
+    {
+        origin = {weapon.width * scale, weapon.height * scale};
+        offset = {25.f, 55.f}; // magic numbers ftw
+        weapon_collision_rec = {
+            screen_pos.x + offset.x - weapon.width * scale,
+            screen_pos.y + offset.y - weapon.height * scale,
+            weapon.width * scale,
+            weapon.height * scale};
+    }
+
+    Rectangle src{0.f, 0.f, static_cast<float>(weapon.width) * right_left, static_cast<float>(weapon.height)};
+    Rectangle dst{screen_pos.x + offset.x, screen_pos.y + offset.y, weapon.width * scale, weapon.height * scale};
+    DrawTexturePro(weapon, src, dst, origin, rotation, WHITE);
+    DrawRectangleLines(
+        weapon_collision_rec.x,
+        weapon_collision_rec.y,
+        weapon_collision_rec.width,
+        weapon_collision_rec.height, 
+        RED);
 }

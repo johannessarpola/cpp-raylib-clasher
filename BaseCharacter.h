@@ -13,7 +13,7 @@ public:
     Rectangle get_collision_rec();
     virtual void tick(float delta);
     virtual Vector2 get_screen_pos() = 0; // HOX: pure virtual function -> abstract class
-    bool is_alive(){ return alive; };
+    bool is_alive() const { return alive; };
     bool set_alive(bool alive) { this->alive = alive; }
 protected:
     Texture2D texture{};

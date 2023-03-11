@@ -43,4 +43,7 @@ void Enemy::tick(float delta)
     if(!is_alive()) return;
     velocity = Vector2Subtract(target->get_screen_pos(), this->get_screen_pos());
     BaseCharacter::tick(delta);
+    if(CheckCollisionRecs(get_collision_rec(), target->get_collision_rec())) {
+        target->take_damage(damage_per_second * delta);
+    }
 }

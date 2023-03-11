@@ -51,6 +51,13 @@ void Character::unload()
     UnloadTexture(weapon);
 }
 
+void Character::take_damage(float damage) {
+    health -= damage;
+    if(health <= 0.f) {
+        set_alive(false);
+    }
+}
+
 void Character::tick(float delta)
 {
     if(!is_alive()) return;

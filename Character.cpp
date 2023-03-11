@@ -53,6 +53,7 @@ void Character::unload()
 
 void Character::tick(float delta)
 {
+    if(!is_alive()) return;
     if (IsKeyDown(KEY_A))
         velocity.x -= 1;
     if (IsKeyDown(KEY_D))
@@ -67,7 +68,7 @@ void Character::tick(float delta)
     Vector2 origin{};
     Vector2 offset{};
     Vector2 screen_pos = get_screen_pos();
-    float rotation = 35.f * right_left; // magic numbers ftw
+    float rotation;
     if (right_left > 0.f)
     {
         origin = {0.f, weapon.height * scale};
@@ -77,6 +78,8 @@ void Character::tick(float delta)
             screen_pos.y + offset.y - weapon.height * scale,
             weapon.width * scale,
             weapon.height * scale};
+
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? 35.f : 0.f;
     }
     else
     {
@@ -87,6 +90,8 @@ void Character::tick(float delta)
             screen_pos.y + offset.y - weapon.height * scale,
             weapon.width * scale,
             weapon.height * scale};
+
+        rotation = IsMouseButtonDown(MOUSE_LEFT_BUTTON) ? -35.f : 0.f;            
     }
 
     Rectangle src{0.f, 0.f, static_cast<float>(weapon.width) * right_left, static_cast<float>(weapon.height)};

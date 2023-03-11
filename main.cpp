@@ -73,6 +73,14 @@ int main()
                 knight.undo_movement();
             }
         }
+
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
+        {
+            if(CheckCollisionRecs(knight.get_Weapon_collision_rec(), goblin.get_collision_rec())) 
+            {
+                goblin.set_alive(false);
+            }
+        }
         goblin.tick(delta);
 
         EndDrawing();

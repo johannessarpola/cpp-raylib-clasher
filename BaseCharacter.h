@@ -13,6 +13,8 @@ public:
     Rectangle get_collision_rec();
     virtual void tick(float delta);
     virtual Vector2 get_screen_pos() = 0; // HOX: pure virtual function -> abstract class
+    bool is_alive(){ return alive; };
+    bool set_alive(bool alive) { this->alive = alive; }
 protected:
     Texture2D texture{};
     Texture2D idle{};
@@ -34,6 +36,7 @@ protected:
     float height{};
     void set_dims();
 private:
+    bool alive{true};
 
 };
 

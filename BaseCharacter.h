@@ -14,7 +14,8 @@ public:
     virtual void tick(float delta);
     virtual Vector2 get_screen_pos() = 0; // HOX: pure virtual function -> abstract class
     bool is_alive() const { return alive; };
-    bool set_alive(bool alive) { this->alive = alive; }
+    void set_alive(bool alive) { this->alive = alive; }
+    void set_speed(float speed) { this->speed = speed; }
 protected:
     Texture2D texture{};
     Texture2D idle{};

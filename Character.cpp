@@ -104,10 +104,5 @@ void Character::tick(float delta)
     Rectangle src{0.f, 0.f, static_cast<float>(weapon.width) * right_left, static_cast<float>(weapon.height)};
     Rectangle dst{screen_pos.x + offset.x, screen_pos.y + offset.y, weapon.width * scale, weapon.height * scale};
     DrawTexturePro(weapon, src, dst, origin, rotation, WHITE);
-    DrawRectangleLines(
-        weapon_collision_rec.x,
-        weapon_collision_rec.y,
-        weapon_collision_rec.width,
-        weapon_collision_rec.height, 
-        RED);
+
 }

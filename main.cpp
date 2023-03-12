@@ -35,10 +35,32 @@ int main()
         Prop{Vector2{600.f, 300.f}, LoadTexture("assets/nature_tileset/Rock.png")},
         Prop{Vector2{400.f, 500.f}, LoadTexture("assets/nature_tileset/Log.png")}};
     Enemy goblin{
-        Vector2{250.f, 250.f},
+        Vector2{500.f, 250.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
         LoadTexture("assets/characters/goblin_run_spritesheet.png")};
-    goblin.set_Target(&knight);
+    
+    Enemy goblin2{
+        Vector2{800.f, 250.f},
+        LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
+        LoadTexture("assets/characters/goblin_run_spritesheet.png")};
+
+    Enemy slime{
+        Vector2{700.f, 700.f},
+        LoadTexture("assets/characters/slime_idle_spritesheet.png"),
+        LoadTexture("assets/characters/slime_run_spritesheet.png")
+        };
+
+    slime.set_speed(1.5f);
+    goblin2.set_speed(2.f);
+    
+    Enemy* enemies[3]= {
+        &goblin, &goblin2, &slime
+    };
+
+    for(auto e : enemies ) 
+    {
+        e->set_Target(&knight);
+    }
 
     float map_scale = 4.;
     float delta{};
@@ -90,19 +112,26 @@ int main()
 
         if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
         {
-            if(CheckCollisionRecs(knight.get_Weapon_collision_rec(), goblin.get_collision_rec())) 
-            {
-                goblin.set_alive(false);
+            for(auto e : enemies) {
+                if(CheckCollisionRecs(knight.get_Weapon_collision_rec(), e->get_collision_rec())) 
+                {
+                    e->set_alive(false);
+                }
             }
         }
-        goblin.tick(delta);
+
+        for(auto e : enemies) {
+            e->tick(delta);
+        }
 
         EndDrawing();
     }
 
     UnloadTexture(map);
     knight.unload();
-    goblin.unload();
+    for(auto e : enemies) {
+        e->unload();
+    }
     for (auto prop : props)
     {
         prop.unload();

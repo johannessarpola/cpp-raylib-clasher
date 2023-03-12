@@ -25,7 +25,7 @@ public:
       virtual Vector2 get_screen_pos() override;
       virtual void unload() override;
       Rectangle get_Weapon_collision_rec() { return weapon_collision_rec; }
-      bool get_health() const { return health; }
+      float get_health() const { return health; }
       void take_damage(float damage);
 
 private:

@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <stdlib.h>
+#include <string>
 
 #include "raylib.h"
 #include "raymath.h"
@@ -53,6 +54,19 @@ int main()
         for (auto prop : props)
         {
             prop.render(knight.get_world_pos());
+        }
+
+        if(!knight.is_alive()) 
+        {
+            DrawText("Game over", 55.f, 45.f, 40, RED);
+            EndDrawing();
+            continue;
+        }
+        else 
+        {
+            std::string hp = "Health: ";
+            hp.append(std::to_string(knight.get_health()), 0, 5);
+            DrawText(hp.c_str(), 55.f, 45.f, 20, GREEN);
         }
 
         knight.tick(delta);

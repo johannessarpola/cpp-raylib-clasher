@@ -38,7 +38,7 @@ int main()
         Vector2{500.f, 250.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
         LoadTexture("assets/characters/goblin_run_spritesheet.png")};
-    
+
     Enemy goblin2{
         Vector2{800.f, 250.f},
         LoadTexture("assets/characters/goblin_idle_spritesheet.png"),
@@ -47,23 +47,22 @@ int main()
     Enemy slime{
         Vector2{700.f, 700.f},
         LoadTexture("assets/characters/slime_idle_spritesheet.png"),
-        LoadTexture("assets/characters/slime_run_spritesheet.png")
-        };
+        LoadTexture("assets/characters/slime_run_spritesheet.png")};
 
     slime.set_speed(1.5f);
     goblin2.set_speed(2.f);
-    
-    Enemy* enemies[3]= {
-        &goblin, &goblin2, &slime
-    };
 
-    for(auto e : enemies ) 
+    Enemy *enemies[3] = {
+        &goblin, &goblin2, &slime};
+
+    for (auto e : enemies)
     {
         e->set_Target(&knight);
     }
 
     float map_scale = 4.;
     float delta{};
+    bool paused{true};
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -72,56 +71,69 @@ int main()
 
         map_pos = Vector2Scale(knight.get_world_pos(), -1.f);
         DrawTextureEx(map, map_pos, 0.0, map_scale, WHITE);
-
-        for (auto prop : props)
-        {
-            prop.render(knight.get_world_pos());
+    
+        if(IsKeyDown(KEY_SPACE)) {
+            paused = false;
         }
 
-        if(!knight.is_alive()) 
+        if (!paused)
         {
-            DrawText("Game over", 55.f, 45.f, 40, RED);
-            EndDrawing();
-            continue;
-        }
-        else 
-        {
-            std::string hp = "Health: ";
-            hp.append(std::to_string(knight.get_health()), 0, 5);
-            DrawText(hp.c_str(), 55.f, 45.f, 20, GREEN);
-        }
 
-        knight.tick(delta);
-        // check maps bounds
-        if (knight.get_world_pos().x < 0.f ||
-            knight.get_world_pos().y < 0.f ||
-            knight.get_world_pos().x + window_width > map.width * map_scale ||
-            knight.get_world_pos().y + window_height > map.height * map_scale)
-        {
-            knight.undo_movement();
-        }
-        for (auto prop : props)
-        {
-            Rectangle prop_rec = prop.get_collision_rec(knight.get_world_pos());
-            Rectangle plr_rec = knight.get_collision_rec();
-            if (CheckCollisionRecs(prop_rec, plr_rec))
+            for (auto prop : props)
+            {
+                prop.render(knight.get_world_pos());
+            }
+
+            if (!knight.is_alive())
+            {
+                DrawText("Game over", 55.f, 45.f, 40, RED);
+                EndDrawing();
+                continue;
+            }
+            else
+            {
+                std::string hp = "Health: ";
+                hp.append(std::to_string(knight.get_health()), 0, 5);
+                DrawText(hp.c_str(), 55.f, 45.f, 20, GREEN);
+            }
+
+            knight.tick(delta);
+            // check maps bounds
+            if (knight.get_world_pos().x < 0.f ||
+                knight.get_world_pos().y < 0.f ||
+                knight.get_world_pos().x + window_width > map.width * map_scale ||
+                knight.get_world_pos().y + window_height > map.height * map_scale)
             {
                 knight.undo_movement();
             }
-        }
-
-        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) 
-        {
-            for(auto e : enemies) {
-                if(CheckCollisionRecs(knight.get_Weapon_collision_rec(), e->get_collision_rec())) 
+            for (auto prop : props)
+            {
+                Rectangle prop_rec = prop.get_collision_rec(knight.get_world_pos());
+                Rectangle plr_rec = knight.get_collision_rec();
+                if (CheckCollisionRecs(prop_rec, plr_rec))
                 {
-                    e->set_alive(false);
+                    knight.undo_movement();
                 }
             }
-        }
 
-        for(auto e : enemies) {
-            e->tick(delta);
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            {
+                for (auto e : enemies)
+                {
+                    if (CheckCollisionRecs(knight.get_Weapon_collision_rec(), e->get_collision_rec()))
+                    {
+                        e->set_alive(false);
+                    }
+                }
+            }
+
+            for (auto e : enemies)
+            {
+                e->tick(delta);
+            }
+        } else 
+        {
+            DrawText("Paused", 50.f, 50.f, 40, GREEN);
         }
 
         EndDrawing();
@@ -129,7 +141,8 @@ int main()
 
     UnloadTexture(map);
     knight.unload();
-    for(auto e : enemies) {
+    for (auto e : enemies)
+    {
         e->unload();
     }
     for (auto prop : props)
